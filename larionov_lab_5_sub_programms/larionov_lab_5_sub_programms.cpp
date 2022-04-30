@@ -235,7 +235,14 @@ private:
 
         int size = array.size();
 
-        cout << nameVector << " = { ";
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << nameVector;
+        
+        SetConsoleTextAttribute(handleConsole, Blue);
+        cout << " =";
+
+        SetConsoleTextAttribute(handleConsole, Yellow);
+        cout << " { ";
 
         for (int i = 0; i < size; ++i) {
 
