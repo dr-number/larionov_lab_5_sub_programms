@@ -364,6 +364,57 @@ public:
 };
 
 
+class Task16 {
+private:
+    struct myPoint {
+        int x;
+        int y;
+    };
+
+    bool isQual(myPoint p1, myPoint p2) {
+        return p1.x == p2.x && p1.y == p2.y;
+    }
+
+    myPoint InputPoint(string namePoint, int min, int max) {
+
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(handleConsole, White);
+
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << "Точка: " << namePoint << endl;
+
+        MyInput myInput = *new MyInput();
+        myPoint point;
+
+        point.x = myInput.InputIntData("Введите X: ", min, max);
+        point.y = myInput.InputIntData("Введите Y: ", min, max);
+
+        return point;
+    }
+
+    myPoint RandomPoint(int min, int max) {
+
+        MyRandom myRandom = *new MyRandom();
+
+        myPoint point;
+        point.x = myRandom.GetRandom(min, max);
+        point.y = myRandom.GetRandom(min, max);
+
+        return point;
+    }
+
+    void PrintPoint(myPoint point, string namePoint) {
+        cout << namePoint << "( " << point.x << "; " << point.y << " )";
+    }
+
+public:
+    void Init() {
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(handleConsole, White);
+    }
+};
+
+
 int main()
 {
     handleConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -384,8 +435,8 @@ int main()
         cout << "\nВведите номер задачи" << endl;
         cout << "6)	Вычислить скалярное произведение векторов произвольной размерности" << endl << endl;
 
-        cout << "16) Вывести на экран только те его компоненты, которые отклоняются от арифметического" << endl;
-        cout << "среднего элементов вектора не более чем на заданную величину." << endl << endl;
+        cout << "16) Вычислить полярные координаты для точек, лежащих внутри круга радиусом R с центром в начале координат" << endl << endl;
+       
 
         cout << "26) Поменять местали указанные элементы массива." << endl << endl;
 
