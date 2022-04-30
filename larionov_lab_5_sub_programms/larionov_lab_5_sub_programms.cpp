@@ -330,18 +330,19 @@ public:
             vector1 = myArray.CreateInputArray(dimension, myArray.MIN_VALUE, myArray.MAX_VALUE);
 
             SetConsoleTextAttribute(handleConsole, Green);
-            cout << "Введение вектора \"b\"" << endl;
+            cout << "\nВведение вектора \"b\"" << endl;
             SetConsoleTextAttribute(handleConsole, White);
             vector2 = myArray.CreateInputArray(dimension, myArray.MIN_VALUE, myArray.MAX_VALUE);
         }
 
+        SetConsoleTextAttribute(handleConsole, Blue);
+        cout << "\nРазмерность: " << dimension << endl;
+
         SetConsoleTextAttribute(handleConsole, Yellow);
-        cout << "\nВектора: " << endl;
+        cout << "Вектора: " << endl;
         PrintVector("a", vector1);
         PrintVector("b", vector2);
-
-        SetConsoleTextAttribute(handleConsole, Blue);
-        cout << "Размерность: " << dimension << endl;
+       
 
         SetConsoleTextAttribute(handleConsole, Green);
         
