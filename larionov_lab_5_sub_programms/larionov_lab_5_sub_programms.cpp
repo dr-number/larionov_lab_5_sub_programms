@@ -367,8 +367,8 @@ public:
 class Task16 {
 private:
     struct myPoint {
-        int x;
-        int y;
+        int x = 0;
+        int y = 0;
     };
 
     bool isQual(myPoint p1, myPoint p2) {
@@ -404,13 +404,64 @@ private:
     }
 
     void PrintPoint(myPoint point, string namePoint) {
-        cout << namePoint << "( " << point.x << "; " << point.y << " )";
+        cout << namePoint << "(" << point.x << "; " << point.y << ")" << endl;
     }
 
 public:
     void Init() {
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(handleConsole, White);
+
+        const int R_DEFAULT = 2;
+        const int R_MIN = 1;
+        const int R_MAX = 10000;
+
+        int r;
+        myPoint m1, m2, m3;
+
+        MyQuestion myQuestion = *new MyQuestion();
+        bool isRandom = myQuestion.isQuestion(myQuestion.QUESTION_RANDOM_DATA);
+
+        if (isRandom) {
+            r = R_DEFAULT;
+
+            while (isQual(m1, m2) || isQual(m2, m3)) {
+                m1 = RandomPoint(R_MIN, r);
+                m2 = RandomPoint(R_MIN, r);
+                m3 = RandomPoint(R_MIN, r);
+            }
+        }
+        else {
+            MyInput myInput = *new MyInput();
+            r = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX);
+
+            bool isGo = false;
+
+            while (isGo) {
+                m1 = InputPoint("Точка M1", 0, R_MAX);
+                m2 = InputPoint("Точка M2", 0, R_MAX);
+                m3 = InputPoint("Точка M3", 0, R_MAX);
+
+                isGo = isQual(m1, m2) || isQual(m2, m3);
+
+                if (isGo) {
+                    SetConsoleTextAttribute(handleConsole, Red);
+                    cout << "Точки не должны иметь общие координаты!" << endl;
+                    SetConsoleTextAttribute(handleConsole, White);
+                }
+            }
+
+        }
+
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << "Исходные данные:" << endl;
+
+        SetConsoleTextAttribute(handleConsole, Yellow);
+        cout << "R = " << r << endl;
+        PrintPoint(m1, "M1");
+        PrintPoint(m2, "M2");
+        PrintPoint(m3, "M3");
+
     }
 };
 
@@ -448,11 +499,10 @@ int main()
             Task6 task6 = *new Task6();
             task6.Init();
         }
-        /*
         else if (select == "16") {
             Task16 task16 = *new Task16();
             task16.Init();
-        }
+        } /*
         else if (select == "26") {
             Task26 task26 = *new Task26();
             task26.Init();
