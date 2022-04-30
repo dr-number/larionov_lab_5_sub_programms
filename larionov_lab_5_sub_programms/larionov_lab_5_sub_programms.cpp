@@ -35,7 +35,7 @@ class MyInput {
 
 public:
     bool isNum(string str) {
-        return str.find_first_not_of("1234567890") == string::npos;
+        return str.find_first_not_of("-1234567890") == string::npos;
     }
 
     int InputIntData(string text, int min, int max, int defaultValue = -1) {
@@ -277,7 +277,7 @@ private:
                 cout << " = ";
 
                 for (int i = 0; i < size; ++i) {
-                    SetConsoleTextAttribute(handleConsole, White);
+                    SetConsoleTextAttribute(handleConsole, Yellow);
                     cout << vector1[i] * vector2[i];
 
                     result += vector1[i] * vector2[i];
@@ -291,7 +291,7 @@ private:
                         cout << " = ";
 
                         SetConsoleTextAttribute(handleConsole, Green);
-                        cout << result;
+                        cout << result << endl;
                     }
                 }
             }
@@ -346,7 +346,11 @@ public:
         SetConsoleTextAttribute(handleConsole, Green);
         
         cout << "\nРезультат умножения векторов:" << endl;
-        cout << getMultiplication(vector1, vector2, isShowCalc) << endl;
+
+        int result = getMultiplication(vector1, vector2, isShowCalc);
+
+        if(!isShowCalc)
+            cout << result << endl;
     }
 
 };
