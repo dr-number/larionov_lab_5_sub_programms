@@ -381,7 +381,7 @@ private:
         SetConsoleTextAttribute(handleConsole, White);
 
         SetConsoleTextAttribute(handleConsole, Green);
-        cout << "Точка: " << namePoint << endl;
+        cout << "\nТочка: " << namePoint << endl;
 
         MyInput myInput = *new MyInput();
         myPoint point;
@@ -426,21 +426,21 @@ public:
             r = R_DEFAULT;
 
             while (isQual(m1, m2) || isQual(m2, m3)) {
-                m1 = RandomPoint(R_MIN, r);
-                m2 = RandomPoint(R_MIN, r);
-                m3 = RandomPoint(R_MIN, r);
+                m1 = RandomPoint(-r, r);
+                m2 = RandomPoint(-r, r);
+                m3 = RandomPoint(-r, r);
             }
         }
         else {
             MyInput myInput = *new MyInput();
             r = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX);
 
-            bool isGo = false;
+            bool isGo = true;
 
             while (isGo) {
-                m1 = InputPoint("Точка M1", 0, R_MAX);
-                m2 = InputPoint("Точка M2", 0, R_MAX);
-                m3 = InputPoint("Точка M3", 0, R_MAX);
+                m1 = InputPoint("Точка M1", -r, r);
+                m2 = InputPoint("Точка M2", -r, r);
+                m3 = InputPoint("Точка M3", -r, r);
 
                 isGo = isQual(m1, m2) || isQual(m2, m3);
 
