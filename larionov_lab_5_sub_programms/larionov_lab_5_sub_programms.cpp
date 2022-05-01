@@ -436,7 +436,7 @@ private:
             cout << endl;
     }
 
-    void PrintResultPoint(myPoint decart, myPoint polar, string namePoint) {
+    void PrintResultPoint(myPoint decart, myPoint polar, string namePoint, double r) {
 
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -446,8 +446,25 @@ private:
         SetConsoleTextAttribute(handleConsole, Blue);
         cout << " = ";
 
-        SetConsoleTextAttribute(handleConsole, Green);
-        PrintPoint(polar, namePoint);
+        SetConsoleTextAttribute(handleConsole, White);
+        PrintPoint(polar, namePoint, false);
+
+        double polarR = polar.x;
+
+        if (polarR < r) {
+            SetConsoleTextAttribute(handleConsole, Green);
+            cout << " - лежит внутри круга";
+        }
+        else if (polarR > r) {
+            SetConsoleTextAttribute(handleConsole, Red);
+            cout << " - не лежит внутри круга";
+        }
+        else {
+            SetConsoleTextAttribute(handleConsole, Yellow);
+            cout << " - лежит на границе круга";
+        }
+
+        cout << endl;
     }
 
     myPoint polarCoord(myPoint coord, string namePoint, bool isPrint) {
@@ -606,11 +623,11 @@ public:
         myPoint M3 = polarCoord(m3, "M3", isShowCalc);
 
         SetConsoleTextAttribute(handleConsole, Green);
-        cout << "\nРезультаты вычислений:" << endl;
+        cout << "\nРезультаты вычислений (при R = " + to_string(r) + "):" << endl;
 
-        PrintResultPoint(m1, M1, "M1");
-        PrintResultPoint(m2, M2, "M2");
-        PrintResultPoint(m3, M3, "M3");
+        PrintResultPoint(m1, M1, "M1", r);
+        PrintResultPoint(m2, M2, "M2", r);
+        PrintResultPoint(m3, M3, "M3", r);
     }
 };
 
