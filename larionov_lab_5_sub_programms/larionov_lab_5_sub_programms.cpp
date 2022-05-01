@@ -428,15 +428,29 @@ private:
         return point;
     }
 
-    void PrintPoint(myPoint point, string namePoint, int color = -1) {
+    void PrintPoint(myPoint point, string namePoint, bool isEndl = true) {
 
-        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(handleConsole, Yellow);
-        
-        cout << namePoint << "(" << point.x << "; " << point.y << ")" << endl;
+        cout << namePoint << "(" << point.x << "; " << point.y << ")";
+
+        if (isEndl)
+            cout << endl;
     }
 
-    myPoint polarCoord(myPoint coord, bool isPrint) {
+    void PrintResultPoint(myPoint decart, myPoint polar, string namePoint) {
+
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        SetConsoleTextAttribute(handleConsole, Yellow);
+        PrintPoint(decart, namePoint, false);
+
+        SetConsoleTextAttribute(handleConsole, Blue);
+        cout << " = ";
+
+        SetConsoleTextAttribute(handleConsole, Green);
+        PrintPoint(polar, namePoint);
+    }
+
+    myPoint polarCoord(myPoint coord, string namePoint, bool isPrint) {
 
         const int ROUND = 100;
 
@@ -453,31 +467,56 @@ private:
 
         //============O===================
         double divisionYX = y / x;
-        double O = RadianToDegree(atan(DegreeToRadian(divisionYX)));
-        double ORound = myRound(O, ROUND);
+
+        double O = atan(DegreeToRadian(divisionYX));
+       // O = RadianToDegree(O);
+
+        /*
+        double O = tan(DegreeToRadian(1 / divisionYX));
+        O = RadianToDegree(atan(O));
+        */
+
+        /*
+        SetConsoleTextAttribute(handleConsole, Red);
+        double tg = tan(DegreeToRadian(45));
+        cout << tg << endl;
+        cout << RadianToDegree(atan(tg)) << endl;
+        SetConsoleTextAttribute(handleConsole, White);
+        */
+
+        //double ORound = myRound(O, ROUND);
         
         //========end O===================
 
         if (isPrint) {
 
+            SetConsoleTextAttribute(handleConsole, Yellow);
+            PrintPoint(coord, namePoint);
+
             SetConsoleTextAttribute(handleConsole, Green);
-            cout << "(x; y) = (r; O)" << endl;
             cout << "r = Корень из (" << x << "^2 + " << y << "^2)" << endl;
             cout << "r = Корень из (" << x2 << " + " << y2 << ")" << endl;
             cout << "r = Корень из (" << underRoot << ")" << endl;
             cout << "r = " << r << endl << endl;
 
             SetConsoleTextAttribute(handleConsole, Blue);
-            cout << "O = tan^-1 (y / x)" << endl;
-            cout << "O = tan^-1 (" << y << " / " << x << ")" << endl;
-            cout << "O = tan^-1 (" << divisionYX << ")" << endl;
+            cout << "O = tg^-1 (" << y << " / " << x << ")" << endl;
+            cout << "O = tg^-1 (" << divisionYX << ")" << endl;
+            cout << "O = " << O << endl;
 
-            cout << "O = " << O << " = " << ORound << endl;
+            //cout << " = " << ORound << endl;
         }
 
         myPoint result;
         result.x = r;
-        result.y = ORound;
+        result.y = O;
+
+        if (isPrint) {
+            SetConsoleTextAttribute(handleConsole, Yellow);
+            cout << "Полярные координаты: ";
+            PrintPoint(result, namePoint);
+            cout << endl;
+        }
 
         return result;
     }
@@ -500,10 +539,11 @@ public:
         SetConsoleTextAttribute(handleConsole, White);
 
         const int R_DEFAULT = 2;
-        const int R_MIN = 1;
+
+        const int R_MIN = -10000;
         const int R_MAX = 10000;
 
-        int R;
+        int r;
         myPoint m1, m2, m3;
 
         MyQuestion myQuestion = *new MyQuestion();
@@ -511,24 +551,24 @@ public:
         bool isShowCalc = myQuestion.isQuestion(myQuestion.QUESTION_SHOW_CALC);
 
         if (isRandom) {
-            R = R_DEFAULT;
+            r = R_DEFAULT + 1;
 
             while (isQual(m1, m2) || isQual(m2, m3)) {
-                m1 = RandomPoint(-R, R);
-                m2 = RandomPoint(-R, R);
-                m3 = RandomPoint(-R, R);
+                m1 = RandomPoint(-r, r);
+                m2 = RandomPoint(-r, r);
+                m3 = RandomPoint(-r, r);
             }
         }
         else {
             MyInput myInput = *new MyInput();
-            R = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX, R_DEFAULT);
+            r = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX, R_DEFAULT);
 
             bool isGo = true;
 
             while (isGo) {
-                m1 = InputPoint("Точка M1", -R, R);
-                m2 = InputPoint("Точка M2", -R, R);
-                m3 = InputPoint("Точка M3", -R, R);
+                m1 = InputPoint("Точка M1", R_MIN, R_MAX);
+                m2 = InputPoint("Точка M2", R_MIN, R_MAX);
+                m3 = InputPoint("Точка M3", R_MIN, R_MAX);
 
                 isGo = isQual(m1, m2) || isQual(m2, m3);
 
@@ -542,25 +582,35 @@ public:
         }
 
         SetConsoleTextAttribute(handleConsole, Green);
-        cout << "Исходные данные:" << endl;
+        cout << "\nИсходные данные:" << endl;
 
-        cout << "R = " << R << endl;
+        SetConsoleTextAttribute(handleConsole, Yellow);
+        cout << "R = " << r << endl;
         PrintPoint(m1, "M1");
         PrintPoint(m2, "M2");
         PrintPoint(m3, "M3");
-        cout << endl;
 
-        myPoint M1 = polarCoord(m1, isShowCalc);
-        PrintPoint(M1, "M1", Yellow);
-        cout << endl;
+        if (isShowCalc) {
+            SetConsoleTextAttribute(handleConsole, Green);
+            cout << "\nr = Корень из (x^2 + y^2)" << endl;
 
-        myPoint M2 = polarCoord(m2, isShowCalc);
-        PrintPoint(M2, "M2", Yellow);
-        cout << endl;
+            SetConsoleTextAttribute(handleConsole, Blue);
+            cout << "O = tg^-1 (y / x)" << endl;
 
-        myPoint M3 = polarCoord(m3, isShowCalc);
-        PrintPoint(M3, "M3", Yellow);
-        cout << endl;
+            SetConsoleTextAttribute(handleConsole, White);
+            cout << "(x; y) = (r; O)" << endl << endl;
+        }
+
+        myPoint M1 = polarCoord(m1, "M1", isShowCalc);
+        myPoint M2 = polarCoord(m2, "M2", isShowCalc);
+        myPoint M3 = polarCoord(m3, "M3", isShowCalc);
+
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << "\nРезультаты вычислений:" << endl;
+
+        PrintResultPoint(m1, M1, "M1");
+        PrintResultPoint(m2, M2, "M2");
+        PrintResultPoint(m3, M3, "M3");
     }
 };
 
