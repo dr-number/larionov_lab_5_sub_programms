@@ -388,7 +388,22 @@ private:
         MyInput myInput = *new MyInput();
         myPoint point;
 
-        point.x = myInput.InputIntData("Введите X: ", min, max);
+        double x;
+        bool isGo = true;
+
+        while (isGo) {
+            x = myInput.InputIntData("Введите X: ", min, max);
+
+            if (x == 0) {
+                SetConsoleTextAttribute(handleConsole, Red);
+                cout << "X не должен быть равен 0!" << endl;
+                SetConsoleTextAttribute(handleConsole, White);
+            }
+            else
+                isGo = false;
+        }
+
+        point.x = x;
         point.y = myInput.InputIntData("Введите Y: ", min, max);
 
         return point;
@@ -398,8 +413,16 @@ private:
 
         MyRandom myRandom = *new MyRandom();
 
+        double x;
+        bool isGo = true;
+
+        while (isGo) {
+            x = myRandom.GetRandom(min, max);
+            isGo = x == 0;
+        }
+
         myPoint point;
-        point.x = myRandom.GetRandom(min, max);
+        point.x = x;
         point.y = myRandom.GetRandom(min, max);
 
         return point;
@@ -415,6 +438,8 @@ private:
 
     myPoint polarCoord(myPoint coord, bool isPrint) {
 
+        const int ROUND = 100;
+
         int x = coord.x;
         int y = coord.y;
 
@@ -427,8 +452,10 @@ private:
         //===========end r=================
 
         //============O===================
-        double divisionXY = x / y;
-        double O = RadianToDegree(1 / tan(DegreeToRadian(divisionXY)));
+        double divisionYX = y / x;
+        double O = RadianToDegree(atan(DegreeToRadian(divisionYX)));
+        double ORound = myRound(O, ROUND);
+        
         //========end O===================
 
         if (isPrint) {
@@ -441,17 +468,22 @@ private:
             cout << "r = " << r << endl << endl;
 
             SetConsoleTextAttribute(handleConsole, Blue);
-            cout << "O = tan^-1 (x / y)" << endl;
-            cout << "O = tan^-1 (" << x << " / " << y << ")" << endl;
-            cout << "O = tan^-1 (" << divisionXY << ")" << endl;
-            cout << "O = " << O << endl << endl;
+            cout << "O = tan^-1 (y / x)" << endl;
+            cout << "O = tan^-1 (" << y << " / " << x << ")" << endl;
+            cout << "O = tan^-1 (" << divisionYX << ")" << endl;
+
+            cout << "O = " << O << " = " << ORound << endl;
         }
 
         myPoint result;
         result.x = r;
-        result.y = O;
+        result.y = ORound;
 
         return result;
+    }
+
+    double myRound(double val, int n) {
+        return round(val * n) / n;
     }
 
     double RadianToDegree(double val) {
@@ -489,7 +521,7 @@ public:
         }
         else {
             MyInput myInput = *new MyInput();
-            R = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX);
+            R = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX, R_DEFAULT);
 
             bool isGo = true;
 
