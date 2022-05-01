@@ -469,8 +469,6 @@ private:
 
     myPoint polarCoord(myPoint coord, string namePoint, bool isPrint) {
 
-        const int ROUND = 100;
-
         int x = coord.x;
         int y = coord.y;
 
@@ -485,8 +483,10 @@ private:
         //============O===================
         double divisionYX = y / x;
 
-        double O = atan(DegreeToRadian(divisionYX));
-       // O = RadianToDegree(O);
+        double O = DegreeToRadian(divisionYX);
+        O = pow(tan(O), -1);
+        O = RadianToDegree(O);
+        //O *= RADIAN;
 
         /*
         double O = tan(DegreeToRadian(1 / divisionYX));
@@ -500,6 +500,16 @@ private:
         cout << RadianToDegree(atan(tg)) << endl;
         SetConsoleTextAttribute(handleConsole, White);
         */
+
+       /*
+        SetConsoleTextAttribute(handleConsole, Red);
+        double tg = tan(DegreeToRadian(60));
+        cout << tg << endl;
+        cout << RadianToDegree(atan(tg)) << endl;
+        SetConsoleTextAttribute(handleConsole, White);
+        */
+      
+        
 
         //double ORound = myRound(O, ROUND);
         
