@@ -451,7 +451,7 @@ public:
             cout << "P — первоначальная сумма вложений," << endl;
             cout << "I — годовая ставка," << endl;
             cout << "T — количество дней вклада," << endl;
-            cout << "K — количество дней в году — 365 или 366." << endl;
+            cout << "K — количество дней в году — 365 или 366." << endl << endl;
 
             cout << "S = (P * I * T / K) / 100" << endl;
             cout << "S = (" << startSum << " * " << per << " * " << years << ") / 100" << endl;
@@ -527,6 +527,8 @@ public:
         PrintInfo("Начальная сумма вклада:", to_string(startSum), "руб.");
         PrintInfo("Срок вклада:", to_string(years), GetWordYear(years));
         PrintInfo("Под:", to_string(per) + "%", "годовых");
+
+        cout << endl;
 
         double result;
 
