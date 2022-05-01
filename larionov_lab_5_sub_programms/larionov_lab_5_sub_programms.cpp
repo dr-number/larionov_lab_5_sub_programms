@@ -367,17 +367,35 @@ public:
 
 
 class Task16 {
-public:
-    void Init() {
+private:
+    void PrintInfo(string title, string value, string postTitle = "") {
 
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(handleConsole, White);
 
-        cout << "Определить прибыль от вклада под p% годовых через N лет для случаев простых или сложных процентов" << endl << endl;
+        SetConsoleTextAttribute(handleConsole, Yellow);
+        cout << title << " ";
 
-        MyQuestion myQuestion = *new MyQuestion();
-        bool isRandom = myQuestion.isQuestion(myQuestion.QUESTION_RANDOM_DATA);
-        bool isEasy = myQuestion.isQuestion("Провести расчеты по простым процентам [y/n]: ");
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << value;
+
+        if (postTitle != "") {
+            SetConsoleTextAttribute(handleConsole, Yellow);
+            cout << " " << postTitle;
+        }
+
+        cout << endl;
+    }
+
+    string GetWordYear(int n) {
+
+        if (n == 1) return "год";
+        if (n >= 2 || n <= 4) return "года";
+        if (n >= 5) return "лет";
+
+        return "лет";
+    }
+public:
+    void Init() {
 
         const int DEFAULT_START_SUM = 60000;
         const int START_SUM_MIN = 1000;
@@ -391,20 +409,46 @@ public:
         const int PER_MIN = 1;
         const int PER_MAX = 25;
 
-        int startSum, n, per;
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(handleConsole, White);
+
+        cout << "Определить прибыль от вклада под p% годовых через N лет для случаев простых или сложных процентов" << endl << endl;
+
+        MyQuestion myQuestion = *new MyQuestion();
+        bool isRandom = myQuestion.isQuestion(myQuestion.QUESTION_RANDOM_DATA);
+        bool isEasy = myQuestion.isQuestion("Провести расчеты по простым процентам [y/n]: ");
+
+        int startSum, years, per;
 
         if (isRandom) {
             MyRandom myRandom = *new MyRandom();
             startSum = myRandom.GetRandom(START_SUM_MIN, START_SUM_MAX);
-            n = myRandom.GetRandom(N_YEAR_MIN, N_YEAR_MAX);
+            years = myRandom.GetRandom(N_YEAR_MIN, N_YEAR_MAX);
             per = myRandom.GetRandom(PER_MIN, PER_MAX);
         }
         else {
             MyInput myInput = *new MyInput();
             startSum = myInput.InputIntData("Введите начальную сумму вклада: [ по умолчанию " + to_string(DEFAULT_START_SUM) + " ]", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
-            n = myInput.InputIntData("Введите срок вклада (в годах): [ по умолчанию " + to_string(DEFAULT_N_YEAR) + " ]", N_YEAR_MIN, N_YEAR_MAX, DEFAULT_N_YEAR);
+            years = myInput.InputIntData("Введите срок вклада (в годах): [ по умолчанию " + to_string(DEFAULT_N_YEAR) + " ]", N_YEAR_MIN, N_YEAR_MAX, DEFAULT_N_YEAR);
             per = myInput.InputIntData("Введите % вклада: [ по умолчанию " + to_string(DEFAULT_PER) + " ]", PER_MIN, PER_MAX, DEFAULT_PER);
         }
+
+        string strAlgoritm;
+        
+        if (isEasy)
+            strAlgoritm = "простым";
+        else
+            strAlgoritm = "сложным";
+
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << "Исходные данные:" << endl;
+
+        PrintInfo("Расчет по ", strAlgoritm, "процентам");
+        PrintInfo("Начальная сумма вклада:", to_string(startSum));
+        PrintInfo("Срок вклада:", to_string(years), GetWordYear(years));
+        PrintInfo("Под:", to_string(per) + "%", "годовых");
+
+
     }
 };
 
