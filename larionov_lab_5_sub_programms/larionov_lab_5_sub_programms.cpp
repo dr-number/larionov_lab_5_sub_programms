@@ -486,32 +486,6 @@ private:
         double O = DegreeToRadian(divisionYX);
         O = pow(tan(O), -1);
         O = RadianToDegree(O);
-        //O *= RADIAN;
-
-        /*
-        double O = tan(DegreeToRadian(1 / divisionYX));
-        O = RadianToDegree(atan(O));
-        */
-
-        /*
-        SetConsoleTextAttribute(handleConsole, Red);
-        double tg = tan(DegreeToRadian(45));
-        cout << tg << endl;
-        cout << RadianToDegree(atan(tg)) << endl;
-        SetConsoleTextAttribute(handleConsole, White);
-        */
-
-       /*
-        SetConsoleTextAttribute(handleConsole, Red);
-        double tg = tan(DegreeToRadian(60));
-        cout << tg << endl;
-        cout << RadianToDegree(atan(tg)) << endl;
-        SetConsoleTextAttribute(handleConsole, White);
-        */
-      
-        
-
-        //double ORound = myRound(O, ROUND);
         
         //========end O===================
 
@@ -531,7 +505,6 @@ private:
             cout << "O = tg^-1 (" << divisionYX << ")" << endl;
             cout << "O = " << O << endl;
 
-            //cout << " = " << ORound << endl;
         }
 
         myPoint result;
