@@ -367,6 +367,17 @@ public:
 
 
 class Task16 {
+public:
+    void Init() {
+
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(handleConsole, White);
+
+        cout << "Определить прибыль от вклада под p% годовых через N лет  для случаев простых или сложных процентов" << endl << endl;
+    }
+};
+
+class Task26 {
 private:
     struct myPoint {
         double x = 0;
@@ -375,6 +386,10 @@ private:
 
     bool isQual(myPoint p1, myPoint p2) {
         return p1.x == p2.x && p1.y == p2.y;
+    }
+
+    bool isQual(myPoint p1, myPoint p2, myPoint p3) {
+        return isQual(p1, p2) || isQual(p2, p3) || isQual(p1, p3);
     }
 
     myPoint InputPoint(string namePoint, int min, int max) {
@@ -553,7 +568,7 @@ public:
         if (isRandom) {
             r = R_DEFAULT + 1;
 
-            while (isQual(m1, m2) || isQual(m2, m3)) {
+            while (isQual(m1, m2, m3)) {
                 m1 = RandomPoint(-r, r);
                 m2 = RandomPoint(-r, r);
                 m3 = RandomPoint(-r, r);
@@ -570,7 +585,7 @@ public:
                 m2 = InputPoint("Точка M2", R_MIN, R_MAX);
                 m3 = InputPoint("Точка M3", R_MIN, R_MAX);
 
-                isGo = isQual(m1, m2) || isQual(m2, m3);
+                isGo = isQual(m1, m2, m3);
 
                 if (isGo) {
                     SetConsoleTextAttribute(handleConsole, Red);
@@ -635,10 +650,9 @@ int main()
         cout << "\nВведите номер задачи" << endl;
         cout << "6)	Вычислить скалярное произведение векторов произвольной размерности" << endl << endl;
 
-        cout << "16) Вычислить полярные координаты для точек, лежащих внутри круга радиусом R с центром в начале координат" << endl << endl;
+        cout << "16) Определить прибыль от вклада под p% годовых через N лет  для случаев простых или сложных процентов" << endl << endl;
        
-
-        cout << "26) Поменять местали указанные элементы массива." << endl << endl;
+        cout << "26) Вычислить полярные координаты для точек, лежащих внутри круга радиусом R с центром в начале координат" << endl << endl;
 
         cout << endl << "Для выхода введите \"0\": ";
 
@@ -651,11 +665,11 @@ int main()
         else if (select == "16") {
             Task16 task16 = *new Task16();
             task16.Init();
-        } /*
+        } 
         else if (select == "26") {
             Task26 task26 = *new Task26();
             task26.Init();
-        }*/
+        }
         else if (select == "0") {
             isGo = false;
         }
