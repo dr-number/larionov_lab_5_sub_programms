@@ -389,7 +389,7 @@ private:
     string GetWordYear(int n) {
 
         if (n == 1) return "год";
-        if (n >= 2 || n <= 4) return "года";
+        if (n >= 2 && n <= 4) return "года";
         if (n >= 5) return "лет";
 
         return "лет";
@@ -441,7 +441,7 @@ public:
             strAlgoritm = "сложным";
 
         SetConsoleTextAttribute(handleConsole, Green);
-        cout << "Исходные данные:" << endl;
+        cout << "\nИсходные данные:" << endl;
 
         PrintInfo("Расчет по", strAlgoritm, "процентам");
         PrintInfo("Начальная сумма вклада:", to_string(startSum), "руб.");
