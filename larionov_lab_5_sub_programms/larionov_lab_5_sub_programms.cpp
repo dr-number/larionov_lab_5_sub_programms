@@ -555,7 +555,7 @@ public:
 
         const int R_DEFAULT = 2;
 
-        const int R_MIN = -10000;
+        const int R_MIN = 1;
         const int R_MAX = 10000;
 
         int r;
@@ -581,9 +581,9 @@ public:
             bool isGo = true;
 
             while (isGo) {
-                m1 = InputPoint("Точка M1", R_MIN, R_MAX);
-                m2 = InputPoint("Точка M2", R_MIN, R_MAX);
-                m3 = InputPoint("Точка M3", R_MIN, R_MAX);
+                m1 = InputPoint("Точка M1", -R_MAX, R_MAX);
+                m2 = InputPoint("Точка M2", -R_MAX, R_MAX);
+                m3 = InputPoint("Точка M3", -R_MAX, R_MAX);
 
                 isGo = isQual(m1, m2, m3);
 
