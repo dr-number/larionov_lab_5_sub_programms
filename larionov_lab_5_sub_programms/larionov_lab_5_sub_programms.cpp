@@ -40,6 +40,10 @@ public:
         return str.find_first_not_of("-1234567890") == string::npos;
     }
 
+    bool isDouble(string str) {
+        return str.find_first_not_of("-1234567890,") == string::npos;
+    }
+
     int InputIntData(string text, int min, int max, int defaultValue = -1) {
 
         string xStr = "";
@@ -79,6 +83,48 @@ public:
 
         return result;
     }
+
+    double InputDoubleData(string text, int min, int max, int defaultValue = -1) {
+
+        string xStr = "";
+        double result = 0;
+        bool isNumber = true;
+
+        while (true) {
+
+            SetConsoleTextAttribute(handleConsole, White);
+            cout << text;
+
+            xStr = GetLine();
+
+            if (xStr == "" && defaultValue != -1)
+                return defaultValue;
+
+
+            try {
+                result = stod(xStr.c_str());
+                isNumber = true;
+            }
+            catch (...) {
+                isNumber = false;
+            }
+
+            if (!(isNumber && isDouble(xStr))) {
+                SetConsoleTextAttribute(handleConsole, Red);
+                cout << endl << xStr + " - не число!" << endl << endl;
+            }
+            else if (result > max || result < min) {
+                SetConsoleTextAttribute(handleConsole, Red);
+                cout << endl << "Число должно лежать в промежутке [" << min << "; " << max << "]!" << endl << endl;
+            }
+            else
+                break;
+        }
+
+        return result;
+    }
+
+
 
 };
 
@@ -395,6 +441,36 @@ private:
         return "лет";
     }
 public:
+    double GetEasyProfit(int startSum, double per, int years, bool isPrint) {
+        
+        double result;
+
+        if (isPrint) {
+
+            cout << "S — выплаченные проценты," << endl;
+            cout << "P — первоначальная сумма вложений," << endl;
+            cout << "I — годовая ставка," << endl;
+            cout << "T — количество дней вклада," << endl;
+            cout << "K — количество дней в году — 365 или 366." << endl;
+
+            cout << "S = (P * I * T / K) / 100" << endl;
+            cout << "S = (" << startSum << " * " << per << " * " << years << ") / 100" << endl;
+            cout << "S = (" << startSum * per * years << ") / 100" << endl;
+        }
+
+        result = (startSum * per * years) / 100;
+
+        if(isPrint)
+            cout << "S = " << result << endl;
+
+        return result;
+    }
+    double GetHardProfit(int startSum, double per, int years, bool isPrint) {
+
+        double result;
+
+        return 0;
+    }
     void Init() {
 
         const int DEFAULT_START_SUM = 60000;
@@ -417,8 +493,10 @@ public:
         MyQuestion myQuestion = *new MyQuestion();
         bool isRandom = myQuestion.isQuestion(myQuestion.QUESTION_RANDOM_DATA);
         bool isEasy = myQuestion.isQuestion("Провести расчеты по простым процентам [y/n]: ");
+        bool isShowCalc = myQuestion.isQuestion(myQuestion.QUESTION_SHOW_CALC);
 
-        int startSum, years, per;
+        int startSum, years;
+        double per;
 
         if (isRandom) {
             MyRandom myRandom = *new MyRandom();
@@ -430,8 +508,10 @@ public:
             MyInput myInput = *new MyInput();
             startSum = myInput.InputIntData("Введите начальную сумму вклада [ по умолчанию " + to_string(DEFAULT_START_SUM) + " ]: ", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
             years = myInput.InputIntData("Введите срок вклада (в годах) [ по умолчанию " + to_string(DEFAULT_N_YEAR) + " ]: ", N_YEAR_MIN, N_YEAR_MAX, DEFAULT_N_YEAR);
-            per = myInput.InputIntData("Введите % вклада [ по умолчанию " + to_string(DEFAULT_PER) + " ]: ", PER_MIN, PER_MAX, DEFAULT_PER);
+            per = myInput.InputDoubleData("Введите % вклада [ по умолчанию " + to_string(DEFAULT_PER) + " ]: ", PER_MIN, PER_MAX, DEFAULT_PER);
         }
+
+        //per = ceil(per * 100) / 100;
 
         string strAlgoritm;
         
@@ -448,6 +528,17 @@ public:
         PrintInfo("Срок вклада:", to_string(years), GetWordYear(years));
         PrintInfo("Под:", to_string(per) + "%", "годовых");
 
+        double result;
+
+        if (isEasy)
+            result = GetEasyProfit(startSum, per, years, isShowCalc);
+        else
+            result = GetHardProfit(startSum, per, years, isShowCalc);
+
+        SetConsoleTextAttribute(handleConsole, Green);
+        cout << "\nРезультат" << endl;
+
+        PrintInfo("Прибыль от вклада составляет", to_string(result), "руб.");
 
     }
 };
