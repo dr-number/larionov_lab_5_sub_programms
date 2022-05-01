@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <Windows.h>
 #include <string>
 #include <stdlib.h>
@@ -65,11 +65,11 @@ public:
 
             if (!(isNumber && isNum(xStr))) {
                 SetConsoleTextAttribute(handleConsole, Red);
-                cout << endl << xStr + " - не число!" << endl << endl;
+                cout << endl << xStr + " - РЅРµ С‡РёСЃР»Рѕ!" << endl << endl;
             }
             else if (result > max || result < min) {
                 SetConsoleTextAttribute(handleConsole, Red);
-                cout << endl << "Число должно лежать в промежутке [" << min << "; " << max << "]!" << endl << endl;
+                cout << endl << "Р§РёСЃР»Рѕ РґРѕР»Р¶РЅРѕ Р»РµР¶Р°С‚СЊ РІ РїСЂРѕРјРµР¶СѓС‚РєРµ [" << min << "; " << max << "]!" << endl << endl;
             }
             else
                 break;
@@ -83,9 +83,9 @@ public:
 class MyQuestion {
 
 public:
-    const string QUESTION_RANDOM_DATA = "Сгенерировать данные случайным образом [y/n]?";
-    const string QUESTION_IN_ORDER_DATA = "Взять числа по порядку [y/n]?";
-    const string QUESTION_SHOW_CALC = "Показывать ход вычислений [y/n]?";
+    const string QUESTION_RANDOM_DATA = "РЎРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РґР°РЅРЅС‹Рµ СЃР»СѓС‡Р°Р№РЅС‹Рј РѕР±СЂР°Р·РѕРј [y/n]?";
+    const string QUESTION_IN_ORDER_DATA = "Р’Р·СЏС‚СЊ С‡РёСЃР»Р° РїРѕ РїРѕСЂСЏРґРєСѓ [y/n]?";
+    const string QUESTION_SHOW_CALC = "РџРѕРєР°Р·С‹РІР°С‚СЊ С…РѕРґ РІС‹С‡РёСЃР»РµРЅРёР№ [y/n]?";
 
     bool isQuestion(string textQuestion) {
 
@@ -104,11 +104,11 @@ public:
 
     double GetRandom(int min, int max) {
 
-        random_device random_device; // Источник энтропии.
-        mt19937 generator(random_device()); // Генератор случайных чисел.
+        random_device random_device; // РСЃС‚РѕС‡РЅРёРє СЌРЅС‚СЂРѕРїРёРё.
+        mt19937 generator(random_device()); // Р“РµРЅРµСЂР°С‚РѕСЂ СЃР»СѓС‡Р°Р№РЅС‹С… С‡РёСЃРµР».
 
-        // (Здесь берется одно инициализирующее значение, можно брать больше)
-        uniform_int_distribution<> distribution(min, max); // Равномерное распределение [min, max]
+        // (Р—РґРµСЃСЊ Р±РµСЂРµС‚СЃСЏ РѕРґРЅРѕ РёРЅРёС†РёР°Р»РёР·РёСЂСѓСЋС‰РµРµ Р·РЅР°С‡РµРЅРёРµ, РјРѕР¶РЅРѕ Р±СЂР°С‚СЊ Р±РѕР»СЊС€Рµ)
+        uniform_int_distribution<> distribution(min, max); // Р Р°РІРЅРѕРјРµСЂРЅРѕРµ СЂР°СЃРїСЂРµРґРµР»РµРЅРёРµ [min, max]
 
         return distribution(generator);
 
@@ -155,7 +155,7 @@ public:
         MyInput myInput = *new MyInput();
 
         for (int i = 0; i < n; ++i)
-            arr.push_back(myInput.InputIntData("Введите целое число (" + to_string(i + 1) + " из " + to_string(n) + "): ", minValue, maxValue));
+            arr.push_back(myInput.InputIntData("Р’РІРµРґРёС‚Рµ С†РµР»РѕРµ С‡РёСЃР»Рѕ (" + to_string(i + 1) + " РёР· " + to_string(n) + "): ", minValue, maxValue));
 
         return arr;
     }
@@ -178,7 +178,7 @@ public:
 
     vector <int> CreateArray() {
         MyInput myInput = *new MyInput();
-        int size = myInput.InputIntData("Сколько элементов должно быть в массиве? [по умолчанию " + to_string(DEFAULT_COUNT_VALUE) + "]: ", MIN_COUNT, MAX_COUNT, DEFAULT_COUNT_VALUE);
+        int size = myInput.InputIntData("РЎРєРѕР»СЊРєРѕ СЌР»РµРјРµРЅС‚РѕРІ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ РјР°СЃСЃРёРІРµ? [РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ " + to_string(DEFAULT_COUNT_VALUE) + "]: ", MIN_COUNT, MAX_COUNT, DEFAULT_COUNT_VALUE);
         return CreateArray(size);
     }
 
@@ -313,7 +313,7 @@ public:
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(handleConsole, White);
 
-        cout << "Вычислить скалярное произведение векторов произвольной размерности" << endl << endl;
+        cout << "Р’С‹С‡РёСЃР»РёС‚СЊ СЃРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ РІРµРєС‚РѕСЂРѕРІ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё" << endl << endl;
 
         vector<int> vector1, vector2;
 
@@ -322,7 +322,7 @@ public:
         MyInput myInput = *new MyInput();
 
         bool isRandom = myQuestion.isQuestion(myQuestion.QUESTION_RANDOM_DATA);
-        int dimension = myInput.InputIntData("Введите размерность векторов [по умолчанию " + to_string(myArray.DEFAULT_COL) + "]: ", myArray.MIN_COUNT, myArray.MAX_COUNT, myArray.DEFAULT_COL);
+        int dimension = myInput.InputIntData("Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РІРµРєС‚РѕСЂРѕРІ [РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ " + to_string(myArray.DEFAULT_COL) + "]: ", myArray.MIN_COUNT, myArray.MAX_COUNT, myArray.DEFAULT_COL);
         bool isShowCalc = myQuestion.isQuestion(myQuestion.QUESTION_SHOW_CALC);
 
         if (isRandom) {
@@ -332,28 +332,28 @@ public:
         else {
 
             SetConsoleTextAttribute(handleConsole, Green);
-            cout << "Введение вектора \"a\"" << endl;
+            cout << "Р’РІРµРґРµРЅРёРµ РІРµРєС‚РѕСЂР° \"a\"" << endl;
             SetConsoleTextAttribute(handleConsole, White);
             vector1 = myArray.CreateInputArray(dimension, myArray.MIN_VALUE, myArray.MAX_VALUE);
 
             SetConsoleTextAttribute(handleConsole, Green);
-            cout << "\nВведение вектора \"b\"" << endl;
+            cout << "\nР’РІРµРґРµРЅРёРµ РІРµРєС‚РѕСЂР° \"b\"" << endl;
             SetConsoleTextAttribute(handleConsole, White);
             vector2 = myArray.CreateInputArray(dimension, myArray.MIN_VALUE, myArray.MAX_VALUE);
         }
 
         SetConsoleTextAttribute(handleConsole, Blue);
-        cout << "\nРазмерность: " << dimension << endl;
+        cout << "\nР Р°Р·РјРµСЂРЅРѕСЃС‚СЊ: " << dimension << endl;
 
         SetConsoleTextAttribute(handleConsole, Yellow);
-        cout << "Вектора: " << endl;
+        cout << "Р’РµРєС‚РѕСЂР°: " << endl;
         PrintVector("a", vector1);
         PrintVector("b", vector2);
        
 
         SetConsoleTextAttribute(handleConsole, Green);
         
-        cout << "\nРезультат умножения векторов:" << endl;
+        cout << "\nР РµР·СѓР»СЊС‚Р°С‚ СѓРјРЅРѕР¶РµРЅРёСЏ РІРµРєС‚РѕСЂРѕРІ:" << endl;
 
         int result = getMultiplication(vector1, vector2, isShowCalc);
 
@@ -381,13 +381,13 @@ private:
         SetConsoleTextAttribute(handleConsole, White);
 
         SetConsoleTextAttribute(handleConsole, Green);
-        cout << "\nТочка: " << namePoint << endl;
+        cout << "\nРўРѕС‡РєР°: " << namePoint << endl;
 
         MyInput myInput = *new MyInput();
         myPoint point;
 
-        point.x = myInput.InputIntData("Введите X: ", min, max);
-        point.y = myInput.InputIntData("Введите Y: ", min, max);
+        point.x = myInput.InputIntData("Р’РІРµРґРёС‚Рµ X: ", min, max);
+        point.y = myInput.InputIntData("Р’РІРµРґРёС‚Рµ Y: ", min, max);
 
         return point;
     }
@@ -433,20 +433,20 @@ public:
         }
         else {
             MyInput myInput = *new MyInput();
-            r = myInput.InputIntData("Введите радиус (R) круга [по умолчанию " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX);
+            r = myInput.InputIntData("Р’РІРµРґРёС‚Рµ СЂР°РґРёСѓСЃ (R) РєСЂСѓРіР° [РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ " + to_string(R_DEFAULT) + "]: ", R_MIN, R_MAX);
 
             bool isGo = true;
 
             while (isGo) {
-                m1 = InputPoint("Точка M1", -r, r);
-                m2 = InputPoint("Точка M2", -r, r);
-                m3 = InputPoint("Точка M3", -r, r);
+                m1 = InputPoint("РўРѕС‡РєР° M1", -r, r);
+                m2 = InputPoint("РўРѕС‡РєР° M2", -r, r);
+                m3 = InputPoint("РўРѕС‡РєР° M3", -r, r);
 
                 isGo = isQual(m1, m2) || isQual(m2, m3);
 
                 if (isGo) {
                     SetConsoleTextAttribute(handleConsole, Red);
-                    cout << "Точки не должны иметь общие координаты!" << endl;
+                    cout << "РўРѕС‡РєРё РЅРµ РґРѕР»Р¶РЅС‹ РёРјРµС‚СЊ РѕР±С‰РёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹!" << endl;
                     SetConsoleTextAttribute(handleConsole, White);
                 }
             }
@@ -454,14 +454,14 @@ public:
         }
 
         SetConsoleTextAttribute(handleConsole, Green);
-        cout << "Исходные данные:" << endl;
+        cout << "РСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ:" << endl;
 
         SetConsoleTextAttribute(handleConsole, Yellow);
         cout << "R = " << r << endl;
         PrintPoint(m1, "M1");
         PrintPoint(m2, "M2");
         PrintPoint(m3, "M3");
-
+        //
     }
 };
 
@@ -473,8 +473,8 @@ int main()
 
     SetConsoleTextAttribute(handleConsole, White);
 
-    cout << "Тема 5. Подпрограммы" << endl;
-    cout << "Ларионов Никита Юрьевич. гр. 110з" << endl;
+    cout << "РўРµРјР° 5. РџРѕРґРїСЂРѕРіСЂР°РјРјС‹" << endl;
+    cout << "Р›Р°СЂРёРѕРЅРѕРІ РќРёРєРёС‚Р° Р®СЂСЊРµРІРёС‡. РіСЂ. 110Р·" << endl;
 
     bool isGo = true;
     string select;
@@ -483,15 +483,15 @@ int main()
     {
         SetConsoleTextAttribute(handleConsole, White);
 
-        cout << "\nВведите номер задачи" << endl;
-        cout << "6)	Вычислить скалярное произведение векторов произвольной размерности" << endl << endl;
+        cout << "\nР’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р·Р°РґР°С‡Рё" << endl;
+        cout << "6)	Р’С‹С‡РёСЃР»РёС‚СЊ СЃРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ РІРµРєС‚РѕСЂРѕРІ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё" << endl << endl;
 
-        cout << "16) Вычислить полярные координаты для точек, лежащих внутри круга радиусом R с центром в начале координат" << endl << endl;
+        cout << "16) Р’С‹С‡РёСЃР»РёС‚СЊ РїРѕР»СЏСЂРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ С‚РѕС‡РµРє, Р»РµР¶Р°С‰РёС… РІРЅСѓС‚СЂРё РєСЂСѓРіР° СЂР°РґРёСѓСЃРѕРј R СЃ С†РµРЅС‚СЂРѕРј РІ РЅР°С‡Р°Р»Рµ РєРѕРѕСЂРґРёРЅР°С‚" << endl << endl;
        
 
-        cout << "26) Поменять местали указанные элементы массива." << endl << endl;
+        cout << "26) РџРѕРјРµРЅСЏС‚СЊ РјРµСЃС‚Р°Р»Рё СѓРєР°Р·Р°РЅРЅС‹Рµ СЌР»РµРјРµРЅС‚С‹ РјР°СЃСЃРёРІР°." << endl << endl;
 
-        cout << endl << "Для выхода введите \"0\": ";
+        cout << endl << "Р”Р»СЏ РІС‹С…РѕРґР° РІРІРµРґРёС‚Рµ \"0\": ";
 
         select = GetLine();
 
@@ -512,7 +512,7 @@ int main()
         }
         else {
             SetConsoleTextAttribute(handleConsole, Red);
-            cout << "\nНекорректные данные!" << endl;
+            cout << "\nРќРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ!" << endl;
             SetConsoleTextAttribute(handleConsole, White);
         }
 
