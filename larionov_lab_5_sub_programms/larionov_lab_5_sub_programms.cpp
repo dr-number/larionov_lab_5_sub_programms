@@ -428,9 +428,9 @@ public:
         }
         else {
             MyInput myInput = *new MyInput();
-            startSum = myInput.InputIntData("Введите начальную сумму вклада: [ по умолчанию " + to_string(DEFAULT_START_SUM) + " ]", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
-            years = myInput.InputIntData("Введите срок вклада (в годах): [ по умолчанию " + to_string(DEFAULT_N_YEAR) + " ]", N_YEAR_MIN, N_YEAR_MAX, DEFAULT_N_YEAR);
-            per = myInput.InputIntData("Введите % вклада: [ по умолчанию " + to_string(DEFAULT_PER) + " ]", PER_MIN, PER_MAX, DEFAULT_PER);
+            startSum = myInput.InputIntData("Введите начальную сумму вклада [ по умолчанию " + to_string(DEFAULT_START_SUM) + " ]: ", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
+            years = myInput.InputIntData("Введите срок вклада (в годах) [ по умолчанию " + to_string(DEFAULT_N_YEAR) + " ]: ", N_YEAR_MIN, N_YEAR_MAX, DEFAULT_N_YEAR);
+            per = myInput.InputIntData("Введите % вклада [ по умолчанию " + to_string(DEFAULT_PER) + " ]: ", PER_MIN, PER_MAX, DEFAULT_PER);
         }
 
         string strAlgoritm;
@@ -443,8 +443,8 @@ public:
         SetConsoleTextAttribute(handleConsole, Green);
         cout << "Исходные данные:" << endl;
 
-        PrintInfo("Расчет по ", strAlgoritm, "процентам");
-        PrintInfo("Начальная сумма вклада:", to_string(startSum));
+        PrintInfo("Расчет по", strAlgoritm, "процентам");
+        PrintInfo("Начальная сумма вклада:", to_string(startSum), "руб.");
         PrintInfo("Срок вклада:", to_string(years), GetWordYear(years));
         PrintInfo("Под:", to_string(per) + "%", "годовых");
 
