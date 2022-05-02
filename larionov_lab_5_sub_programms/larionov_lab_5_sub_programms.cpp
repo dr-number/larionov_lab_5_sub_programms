@@ -561,7 +561,7 @@ public:
 
         const int DEFAULT_RAND_START_SUM = 60;
         const int START_RAND_SUM_MIN = 1;
-        const int START_RAND_SUM_MAX = 1000;
+        const int START_RAND_SUM_MAX = 100000;
 
         const int DEFAULT_START_SUM = DEFAULT_RAND_START_SUM * 1000;
         const int START_SUM_MIN = START_RAND_SUM_MIN * 1000;
