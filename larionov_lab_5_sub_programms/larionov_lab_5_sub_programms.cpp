@@ -471,23 +471,23 @@ public:
         double charges;
 
         const int WIDTH_YEAR = 4;
-        const int WIDTH_CHARGES = 10;
-        const int WIDTH_TOTAL = 12;
+        const int WIDTH_CHARGES = 4;
+        const int WIDTH_TOTAL = 6;
 
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
         if (isPrint) {
             SetConsoleTextAttribute(handleConsole, White);
             cout.width(WIDTH_YEAR);
-            cout << "год ";
+            cout << left << "год ";
 
             SetConsoleTextAttribute(handleConsole, Green);
             cout.width(WIDTH_CHARGES);
-            cout << "начисления ";
+            cout << " " << left << "начисления ";
 
             SetConsoleTextAttribute(handleConsole, Yellow);
             cout.width(WIDTH_TOTAL);
-            cout << "итоговая сумма" << endl;
+            cout << " " << left << "итоговая сумма" << endl;
         }
 
         for (int i = 0; i < years; ++i) {
@@ -498,15 +498,15 @@ public:
             if (isPrint) {
                 SetConsoleTextAttribute(handleConsole, White);
                 cout.width(WIDTH_YEAR);
-                cout << (i + 1);
+                cout << left << (i + 1);
 
                 SetConsoleTextAttribute(handleConsole, Green);
                 cout.width(WIDTH_CHARGES);
-                cout << total << " / 100 * " << per << " = " << charges;
+                cout << " " << left << total << " / 100 * " << per << " = " << charges;
 
                 SetConsoleTextAttribute(handleConsole, Yellow);
                 cout.width(WIDTH_TOTAL);
-                cout << total << " + " << charges << " = " << total << endl;
+                cout << " " << right << total << " + " << charges << " = " << total << endl;
             }
 
         }
