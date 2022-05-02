@@ -492,28 +492,18 @@ public:
 
     double GetEasyProfit(int startSum, double per, int years, bool isLongYear, bool isPrint) {
         
-        double result;
+        double result = 0;
 
-        if (isPrint) {
+        for (int i = 1; i <= years; ++i) {
 
-            /*
-            cout << "S — выплаченные проценты," << endl;
-            cout << "P — первоначальная сумма вложений," << endl;
-            cout << "I — годовая ставка," << endl;
-            cout << "T — количество дней вклада," << endl;
-            cout << "K — количество дней в году — 365 или 366." << endl << endl;
+            if (i != 1)
+                isLongYear = i % 4 == 0;
 
-            cout << "S = (P * I * T / K) / 100" << endl;
-            cout << "S = (" << startSum << " * " << per << " * " << years << ") / 100" << endl;
-            cout << "S = (" << startSum * per * years << ") / 100" << endl;
-            */
+            result += GetEasyProfitYear(startSum, per, isLongYear, isPrint);
+
         }
 
-        result = (startSum * per * years) / 100;
-
-        if(isPrint)
-            cout << "S = " << result << endl;
-
+        
         return result;
     }
     double GetHardProfit(int startSum, double per, int years, bool isPrint) {
@@ -629,7 +619,7 @@ public:
             if (isEasy) {
                 defaultYear = DEFAULT_EASY_N_YEAR;
                 MyQuestion myQuestion = *new MyQuestion();
-                isLongYear = myQuestion.isQuestion("Год высокосный? [y/n]: ");
+                isLongYear = myQuestion.isQuestion("Год високосный? [y/n]: ");
             }
             else
                 defaultYear = DEFAULT_HARD_N_YEAR;
