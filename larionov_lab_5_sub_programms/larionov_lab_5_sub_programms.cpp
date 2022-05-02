@@ -26,6 +26,46 @@ enum ConsoleColor
     Black = 0
 };
 
+string RoundStr(float var, int after = 2) {
+
+    string s = to_string(var);
+    int size = s.size();
+
+    string result = "";
+    bool isAfter = false;
+    int afterCount = 0;
+
+    for (int i = 0; i < size; ++i) {
+
+        if (afterCount == after)
+            break;
+        
+        if (isAfter)
+            ++afterCount;
+
+        if (!isAfter && s[i] == ',')
+            isAfter = true;
+
+        result += s[i];
+
+    }
+
+    return result;
+}
+
+float Round(float var)
+{
+    // 37.66666 * 100 = 3766.66
+    // 3766.66 + .5 = 3767.16 для значения округления
+
+    // затем вводим тип int в значение 3767
+    // затем делим на 100, поэтому значение преобразуется в 37,67
+
+    float value = (int)(var * 100 + .5);
+    return stod(RoundStr((float)value / 100));
+
+}
+
 string GetLine() {
     string line;
     getline(cin, line);
@@ -245,36 +285,6 @@ public:
         }
     }
 
-    int GetIndexMinElem(vector<int> arr) {
-
-        int index = 0;
-        int min = arr[0];
-        int size = arr.size();
-
-        for (int i = 1; i < size; ++i)
-            if (arr[i] < min) {
-                min = arr[i];
-                index = i;
-            }
-
-        return index;
-    }
-
-    int GetIndexMaxElem(vector<int> arr) {
-
-        int index = 0;
-        int max = arr[0];
-        int size = arr.size();
-
-        for (int i = 1; i < size; ++i)
-            if (arr[i] > max) {
-                max = arr[i];
-                index = i;
-            }
-
-        return index;
-    }
-
 };
 
 class Task6 {
@@ -468,7 +478,7 @@ public:
     double GetHardProfit(int startSum, double per, int years, bool isPrint) {
 
         double total = startSum;
-        double charges;
+        double charges = 0;
 
         const int WIDTH_YEAR = 4;
         const int WIDTH_CHARGES = 4;
@@ -487,8 +497,11 @@ public:
 
             SetConsoleTextAttribute(handleConsole, Yellow);
             cout.width(WIDTH_TOTAL);
-            cout << " " << left << "итоговая сумма" << endl;
+            cout << " " << right << "итоговая сумма" << endl;
         }
+
+        string strTotal, strCharges;
+        string strPer = RoundStr(Round(per));
 
         for (int i = 0; i < years; ++i) {
 
@@ -496,28 +509,34 @@ public:
             total += charges;
 
             if (isPrint) {
+
+                strTotal = RoundStr(Round(total));
+                strCharges = RoundStr(Round(charges));
+
                 SetConsoleTextAttribute(handleConsole, White);
                 cout.width(WIDTH_YEAR);
                 cout << left << (i + 1);
 
                 SetConsoleTextAttribute(handleConsole, Green);
                 cout.width(WIDTH_CHARGES);
-                cout << " " << left << total << " / 100 * " << per << " = " << charges;
+                cout << " " << left << strTotal << " / 100 * " << strPer << " = " << strCharges;
 
                 SetConsoleTextAttribute(handleConsole, Yellow);
                 cout.width(WIDTH_TOTAL);
-                cout << " " << right << total << " + " << charges << " = " << total << endl;
+                cout << " " << right << strTotal << " + " << strCharges << " = " << strTotal << endl;
             }
 
         }
 
+        double result = total - startSum;
+
         if (isPrint) {
-            PrintInfo("\nНачисления:", to_string(charges));
-            PrintInfo("Итоговая сумма", to_string(total));
+            PrintInfo("\nНачисления:", RoundStr(Round(result)));
+            PrintInfo("Итоговая сумма", RoundStr(Round(total)));
             cout << endl;
         }
 
-        return charges;
+        return result;
     }
     void Init() {
 
@@ -575,8 +594,6 @@ public:
             per = myInput.InputDoubleData("Введите % вклада [ по умолчанию " + to_string(DEFAULT_PER) + " ]: ", PER_MIN, PER_MAX, DEFAULT_PER);
         }
 
-        //per = ceil(per * 100) / 100;
-
         string strAlgoritm;
         
         if (isEasy)
@@ -590,7 +607,7 @@ public:
         PrintInfo("Расчет по", strAlgoritm, "процентам");
         PrintInfo("Начальная сумма вклада:", to_string(startSum), "руб.");
         PrintInfo("Срок вклада:", to_string(years), GetWordYear(years));
-        PrintInfo("Под:", to_string(per) + "%", "годовых");
+        PrintInfo("Под:", RoundStr(Round(per)) + "%", "годовых");
 
         cout << endl;
 
@@ -604,7 +621,7 @@ public:
         SetConsoleTextAttribute(handleConsole, Green);
         cout << "\nРезультат" << endl;
 
-        PrintInfo("Прибыль от вклада составляет", to_string(result), "руб.");
+        PrintInfo("Прибыль от вклада составляет:", to_string(result), "руб.");
 
     }
 };
