@@ -467,9 +467,49 @@ public:
     }
     double GetHardProfit(int startSum, double per, int years, bool isPrint) {
 
-        double result;
+        double total = startSum;
+        double charges;
 
-        return 0;
+        const int WIDTH = 8;
+
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        if (isPrint) {
+            SetConsoleTextAttribute(handleConsole, White);
+            cout << "год " << setw(WIDTH);
+
+            SetConsoleTextAttribute(handleConsole, Green);
+            cout << "начисления " << setw(WIDTH);
+
+            SetConsoleTextAttribute(handleConsole, Yellow);
+            cout << "итоговая сумма" << endl;
+        }
+
+        for (int i = 0; i < years; ++i) {
+
+            charges = total / 100 * per;
+            total += charges;
+
+            if (isPrint) {
+                SetConsoleTextAttribute(handleConsole, White);
+                cout << (i + 1) << setw(WIDTH);
+
+                SetConsoleTextAttribute(handleConsole, Green);
+                cout << total << " / 100 * " << per << " = " << charges << setw(WIDTH);
+
+                SetConsoleTextAttribute(handleConsole, Yellow);
+                cout << total << " + " << charges << " = " << total << endl;
+            }
+
+        }
+
+        if (isPrint) {
+            PrintInfo("\nНачисления:", to_string(charges));
+            PrintInfo("Итоговая сумма", to_string(total));
+            cout << endl;
+        }
+
+        return charges;
     }
     void Init() {
 
