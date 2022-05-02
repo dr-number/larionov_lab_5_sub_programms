@@ -450,6 +450,25 @@ private:
 
         return "лет";
     }
+
+    string GetMoneySeparator(string str, string separator = " ") {
+
+        int size = str.size() - 4;
+
+        string result = "";
+        int n = 0;
+
+        for (int i = size; i >= 0; --i, ++n) {
+
+            if (n != 0 && n % 3 == 0)
+                result = separator + result;
+
+            result = str[i] + result;
+
+        }
+
+        return result + str[size + 1] + str[size + 2] + str[size + 3];
+    }
 public:
     double GetEasyProfit(int startSum, double per, int years, bool isPrint) {
         
@@ -510,8 +529,8 @@ public:
 
             if (isPrint) {
 
-                strTotal = RoundStr(Round(total));
-                strCharges = RoundStr(Round(charges));
+                strTotal = GetMoneySeparator(RoundStr(Round(total)));
+                strCharges = GetMoneySeparator(RoundStr(Round(charges)));
 
                 SetConsoleTextAttribute(handleConsole, White);
                 cout.width(WIDTH_YEAR);
@@ -531,8 +550,8 @@ public:
         double result = total - startSum;
 
         if (isPrint) {
-            PrintInfo("\nНачисления:", RoundStr(Round(result)));
-            PrintInfo("Итоговая сумма", RoundStr(Round(total)));
+            PrintInfo("\nНачисления:", GetMoneySeparator(RoundStr(Round(result))));
+            PrintInfo("Итоговая сумма", GetMoneySeparator(RoundStr(Round(total))));
             cout << endl;
         }
 
@@ -589,7 +608,7 @@ public:
                 defaultYear = DEFAULT_HARD_N_YEAR;
 
             MyInput myInput = *new MyInput();
-            startSum = myInput.InputIntData("Введите начальную сумму вклада [ по умолчанию " + to_string(DEFAULT_START_SUM) + " ]: ", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
+            startSum = myInput.InputIntData("Введите начальную сумму вклада [ по умолчанию " + GetMoneySeparator(RoundStr(Round(DEFAULT_START_SUM))) + " ]: ", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
             years = myInput.InputIntData("Введите срок вклада (в годах) [ по умолчанию " + to_string(defaultYear) + " ]: ", N_YEAR_MIN, N_YEAR_MAX, defaultYear);
             per = myInput.InputDoubleData("Введите % вклада [ по умолчанию " + to_string(DEFAULT_PER) + " ]: ", PER_MIN, PER_MAX, DEFAULT_PER);
         }
@@ -605,7 +624,7 @@ public:
         cout << "\nИсходные данные:" << endl;
 
         PrintInfo("Расчет по", strAlgoritm, "процентам");
-        PrintInfo("Начальная сумма вклада:", to_string(startSum), "руб.");
+        PrintInfo("Начальная сумма вклада:", GetMoneySeparator(RoundStr(Round(startSum))), "руб.");
         PrintInfo("Срок вклада:", to_string(years), GetWordYear(years));
         PrintInfo("Под:", RoundStr(Round(per)) + "%", "годовых");
 
@@ -621,7 +640,7 @@ public:
         SetConsoleTextAttribute(handleConsole, Green);
         cout << "\nРезультат" << endl;
 
-        PrintInfo("Прибыль от вклада составляет:", to_string(result), "руб.");
+        PrintInfo("Прибыль от вклада составляет:", GetMoneySeparator(RoundStr(Round(result))), "руб.");
 
     }
 };
