@@ -472,16 +472,22 @@ private:
 public:
     double GetEasyProfitYear(int startSum, double per, bool isLongYear, bool isPrint) {
 
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
         int daysInYear = isLongYear ? 366 : 365;
 
-        double result = (startSum * per * 36500) / daysInYear;
+        double result = ((startSum / 100 * per) * 365) / daysInYear;
 
         if (isPrint) {
-            cout << "(" << startSum << " * " << per << " * 100 * 365) / " << daysInYear;
+
+            SetConsoleTextAttribute(handleConsole, Yellow);
+            cout << "(" << GetMoneySeparator(RoundStr(Round(startSum))) << " * " << per << " / 100 * 365) / " << daysInYear << " = ";
+
+            SetConsoleTextAttribute(handleConsole, Green);
+            cout << GetMoneySeparator(RoundStr(Round(result)));
 
             if (isLongYear)
                 cout << " - Высокосный год";
-
 
             cout << endl;
         }
@@ -492,12 +498,21 @@ public:
 
     double GetEasyProfit(int startSum, double per, int years, bool isLongYear, bool isPrint) {
         
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
         double result = 0;
 
-        for (int i = 1; i <= years; ++i) {
+        int n = isLongYear ? 4 : 1;
+
+        for (int i = 1; i <= years; ++i, ++n) {
 
             if (i != 1)
-                isLongYear = i % 4 == 0;
+                isLongYear = n % 4 == 0;
+
+            if (isPrint) {
+                SetConsoleTextAttribute(handleConsole, White);
+                cout << i << ") ";
+            }
 
             result += GetEasyProfitYear(startSum, per, isLongYear, isPrint);
 
@@ -579,7 +594,7 @@ public:
         const int START_SUM_MIN = START_RAND_SUM_MIN * 1000;
         const int START_SUM_MAX = START_RAND_SUM_MAX * 1000;
 
-        const int DEFAULT_EASY_N_YEAR = 2;
+        const int DEFAULT_EASY_N_YEAR = 8;
         const int DEFAULT_HARD_N_YEAR = 15;
         const int N_YEAR_MIN = 1;
         const int N_YEAR_MAX = 15;
