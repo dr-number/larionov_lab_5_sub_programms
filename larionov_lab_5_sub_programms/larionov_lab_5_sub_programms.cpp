@@ -470,12 +470,33 @@ private:
         return result + str[size + 1] + str[size + 2] + str[size + 3];
     }
 public:
-    double GetEasyProfit(int startSum, double per, int years, bool isPrint) {
+    double GetEasyProfitYear(int startSum, double per, bool isLongYear, bool isPrint) {
+
+        int daysInYear = isLongYear ? 366 : 365;
+
+        double result = (startSum * per * 36500) / daysInYear;
+
+        if (isPrint) {
+            cout << "(" << startSum << " * " << per << " * 100 * 365) / " << daysInYear;
+
+            if (isLongYear)
+                cout << " - Высокосный год";
+
+
+            cout << endl;
+        }
+
+        return result;
+
+    }
+
+    double GetEasyProfit(int startSum, double per, int years, bool isLongYear, bool isPrint) {
         
         double result;
 
         if (isPrint) {
 
+            /*
             cout << "S — выплаченные проценты," << endl;
             cout << "P — первоначальная сумма вложений," << endl;
             cout << "I — годовая ставка," << endl;
@@ -485,6 +506,7 @@ public:
             cout << "S = (P * I * T / K) / 100" << endl;
             cout << "S = (" << startSum << " * " << per << " * " << years << ") / 100" << endl;
             cout << "S = (" << startSum * per * years << ") / 100" << endl;
+            */
         }
 
         result = (startSum * per * years) / 100;
@@ -589,6 +611,8 @@ public:
         int startSum, years;
         double per;
 
+        bool isLongYear = false;
+
         if (isRandom) {
             MyRandom myRandom = *new MyRandom();
             startSum = myRandom.GetRandom(START_RAND_SUM_MIN, START_RAND_SUM_MAX);
@@ -602,8 +626,11 @@ public:
 
             int defaultYear;
 
-            if (isEasy)
+            if (isEasy) {
                 defaultYear = DEFAULT_EASY_N_YEAR;
+                MyQuestion myQuestion = *new MyQuestion();
+                isLongYear = myQuestion.isQuestion("Год высокосный? [y/n]: ");
+            }
             else
                 defaultYear = DEFAULT_HARD_N_YEAR;
 
@@ -633,7 +660,7 @@ public:
         double result;
 
         if (isEasy)
-            result = GetEasyProfit(startSum, per, years, isShowCalc);
+            result = GetEasyProfit(startSum, per, years, isShowCalc, isLongYear);
         else
             result = GetHardProfit(startSum, per, years, isShowCalc);
 
