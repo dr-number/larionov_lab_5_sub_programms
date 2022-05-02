@@ -521,11 +521,16 @@ public:
     }
     void Init() {
 
-        const int DEFAULT_START_SUM = 60000;
-        const int START_SUM_MIN = 1000;
-        const int START_SUM_MAX = 1000000;
+        const int DEFAULT_RAND_START_SUM = 60;
+        const int START_RAND_SUM_MIN = 1;
+        const int START_RAND_SUM_MAX = 1000;
 
-        const int DEFAULT_N_YEAR = 1;
+        const int DEFAULT_START_SUM = DEFAULT_RAND_START_SUM * 1000;
+        const int START_SUM_MIN = START_RAND_SUM_MIN * 1000;
+        const int START_SUM_MAX = START_RAND_SUM_MAX * 1000;
+
+        const int DEFAULT_EASY_N_YEAR = 2;
+        const int DEFAULT_HARD_N_YEAR = 15;
         const int N_YEAR_MIN = 1;
         const int N_YEAR_MAX = 15;
 
@@ -548,14 +553,25 @@ public:
 
         if (isRandom) {
             MyRandom myRandom = *new MyRandom();
-            startSum = myRandom.GetRandom(START_SUM_MIN, START_SUM_MAX);
+            startSum = myRandom.GetRandom(START_RAND_SUM_MIN, START_RAND_SUM_MAX);
+
+            startSum *= 1000;
+
             years = myRandom.GetRandom(N_YEAR_MIN, N_YEAR_MAX);
             per = myRandom.GetRandom(PER_MIN, PER_MAX);
         }
         else {
+
+            int defaultYear;
+
+            if (isEasy)
+                defaultYear = DEFAULT_EASY_N_YEAR;
+            else
+                defaultYear = DEFAULT_HARD_N_YEAR;
+
             MyInput myInput = *new MyInput();
             startSum = myInput.InputIntData("Введите начальную сумму вклада [ по умолчанию " + to_string(DEFAULT_START_SUM) + " ]: ", START_SUM_MIN, START_SUM_MAX, DEFAULT_START_SUM);
-            years = myInput.InputIntData("Введите срок вклада (в годах) [ по умолчанию " + to_string(DEFAULT_N_YEAR) + " ]: ", N_YEAR_MIN, N_YEAR_MAX, DEFAULT_N_YEAR);
+            years = myInput.InputIntData("Введите срок вклада (в годах) [ по умолчанию " + to_string(defaultYear) + " ]: ", N_YEAR_MIN, N_YEAR_MAX, defaultYear);
             per = myInput.InputDoubleData("Введите % вклада [ по умолчанию " + to_string(DEFAULT_PER) + " ]: ", PER_MIN, PER_MAX, DEFAULT_PER);
         }
 
