@@ -1,15 +1,10 @@
 ﻿#include <iostream>
 #include <Windows.h>
-#include <string>
-#include <stdlib.h>
-#include <cctype>
-#include <conio.h>
 #include <random>
-#include <algorithm>
 #include <iomanip>
-#include <cmath>
 #include <vector>
 #include <random>
+#include <regex>
 
 #define PI 3.14159265
 
@@ -163,9 +158,6 @@ public:
 
         return result;
     }
-
-
-
 };
 
 class MyQuestion {
@@ -180,7 +172,7 @@ public:
         cout << textQuestion << endl;
         string answer = GetLine();
 
-        transform(answer.begin(), answer.end(), answer.begin(), tolower);
+        transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
         return answer == "y" || answer == "";
     }
 };
