@@ -708,22 +708,13 @@ private:
         return point;
     }
  
-    
 
     myPoint RandomPoint(int min, int max) {
 
         MyRandom myRandom = *new MyRandom();
 
-        double x;
-        bool isGo = true;
-
-        while (isGo) {
-            x = myRandom.GetRandom(min, max);
-            isGo = x == 0;
-        }
-
         myPoint point;
-        point.x = x;
+        point.x = myRandom.GetRandom(min, max);
         point.y = myRandom.GetRandom(min, max);
 
         return point;
