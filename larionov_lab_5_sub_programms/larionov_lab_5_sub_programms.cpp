@@ -71,12 +71,12 @@ string GetLine() {
 class MyInput {
 
 public:
-    bool isNum(string str) {
-        return str.find_first_not_of("-1234567890") == string::npos;
+    bool isDouble(string str) {
+        return regex_match(str, regex("^[-]?[0-9]*?,?[0-9]*"));
     }
 
-    bool isDouble(string str) {
-        return str.find_first_not_of("-1234567890,") == string::npos;
+    bool isNum(string str) {
+        return regex_match(str, regex("^[-]?[0-9]*"));
     }
 
     int InputIntData(string text, int min, int max, int defaultValue = -1) {
