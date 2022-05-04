@@ -690,6 +690,7 @@ private:
         return isQual(p1, p2) || isQual(p2, p3) || isQual(p1, p3);
     }
 
+    
     myPoint InputPoint(string namePoint, int min, int max) {
 
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -701,26 +702,13 @@ private:
         MyInput myInput = *new MyInput();
         myPoint point;
 
-        double x;
-        bool isGo = true;
-
-        while (isGo) {
-            x = myInput.InputIntData("Введите X: ", min, max);
-
-            if (x == 0) {
-                SetConsoleTextAttribute(handleConsole, Red);
-                cout << "X не должен быть равен 0!" << endl;
-                SetConsoleTextAttribute(handleConsole, White);
-            }
-            else
-                isGo = false;
-        }
-
-        point.x = x;
+        point.x = myInput.InputIntData("Введите X: ", min, max);
         point.y = myInput.InputIntData("Введите Y: ", min, max);
 
         return point;
     }
+ 
+    
 
     myPoint RandomPoint(int min, int max) {
 
@@ -796,9 +784,22 @@ private:
         //============O===================
         double divisionYX = y / x;
 
-        double O = DegreeToRadian(divisionYX);
-        O = pow(tan(O), -1);
-        O = RadianToDegree(O);
+        double O = 0;
+        
+        if (divisionYX != 0) {
+            O = DegreeToRadian(divisionYX);
+            O = pow(tan(O), -1);
+            O = RadianToDegree(O);
+        }
+        else if (x == 0 && y == 0) {
+            O = 0;
+        }
+        else if (x == 0 && y != 0) {
+            O = 1.5707963267949; // 90 градусов
+        }
+        else if (x != 0 && y == 0) {
+            O = PI; // 180 градусов
+        }
         
         //========end O===================
 
