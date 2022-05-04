@@ -416,6 +416,23 @@ public:
 
 class Task16 {
 private:
+    const int DEFAULT_RAND_START_SUM = 60;
+    const int START_RAND_SUM_MIN = 1;
+    const int START_RAND_SUM_MAX = 1000;
+
+    const int DEFAULT_START_SUM = DEFAULT_RAND_START_SUM * 1000;
+    const int START_SUM_MIN = START_RAND_SUM_MIN * 1000;
+    const int START_SUM_MAX = START_RAND_SUM_MAX * 1000;
+
+    const int DEFAULT_EASY_N_YEAR = 8;
+    const int DEFAULT_HARD_N_YEAR = 15;
+    const int N_YEAR_MIN = 1;
+    const int N_YEAR_MAX = 15;
+
+    const int DEFAULT_PER = 4;
+    const int PER_MIN = 1;
+    const int PER_MAX = 25;
+
     void PrintInfo(string title, string value, string postTitle = "") {
 
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -461,7 +478,7 @@ private:
 
         return result + str[size + 1] + str[size + 2] + str[size + 3];
     }
-public:
+
     double GetEasyProfitYear(int startSum, double per, bool isLongYear, bool isPrint) {
 
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -489,7 +506,7 @@ public:
     }
 
     double GetEasyProfit(int startSum, double per, int years, bool isLongYear, bool isPrint) {
-        
+
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
         double result = 0;
@@ -510,9 +527,10 @@ public:
 
         }
 
-        
+
         return result;
     }
+
     double GetHardProfit(int startSum, double per, int years, bool isPrint) {
 
         double total = startSum;
@@ -576,25 +594,9 @@ public:
 
         return result;
     }
+public:
+
     void Init() {
-
-        const int DEFAULT_RAND_START_SUM = 60;
-        const int START_RAND_SUM_MIN = 1;
-        const int START_RAND_SUM_MAX = 1000;
-
-        const int DEFAULT_START_SUM = DEFAULT_RAND_START_SUM * 1000;
-        const int START_SUM_MIN = START_RAND_SUM_MIN * 1000;
-        const int START_SUM_MAX = START_RAND_SUM_MAX * 1000;
-
-        const int DEFAULT_EASY_N_YEAR = 8;
-        const int DEFAULT_HARD_N_YEAR = 15;
-        const int N_YEAR_MIN = 1;
-        const int N_YEAR_MAX = 15;
-
-        const int DEFAULT_PER = 4;
-        const int PER_MIN = 1;
-        const int PER_MAX = 25;
-
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(handleConsole, White);
 
@@ -671,6 +673,10 @@ public:
 
 class Task26 {
 private:
+    const int R_DEFAULT = 2;
+    const int R_MIN = 1;
+    const int R_MAX = 10000;
+
     struct myPoint {
         double x = 0;
         double y = 0;
@@ -844,11 +850,6 @@ public:
     void Init() {
         HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(handleConsole, White);
-
-        const int R_DEFAULT = 2;
-
-        const int R_MIN = 1;
-        const int R_MAX = 10000;
 
         int r;
         myPoint m1, m2, m3;
